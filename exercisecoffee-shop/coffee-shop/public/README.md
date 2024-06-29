@@ -26,6 +26,8 @@ npm run dev
 ## Nextjs
 nextjs allows us to build full-stack applications within one repo. Is is very similar to what you have seen so far with react, (except for file-based routing. So be careful what you add to the pages folder). It then adds a new folder inside pages called api, which allows us to build our api.
 
+## React is the front of Nextjs
+
 ## API
 To start to make an endpoint in the api folder under pages create a new .js file
 To start copy the content of the hello.js file that nextjs provides
