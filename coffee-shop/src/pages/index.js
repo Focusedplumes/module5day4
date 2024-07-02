@@ -13,8 +13,8 @@ export default function Home() {
     loadData();
   }, []);
 
-  function addToCart(id) {
-    fetch(`/api/cart`, {
+  async function addToCart(id) {
+     await fetch(`/api/cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <>
     <nav className="navbar">  {/* simple navigation showing items in shopping cart  */}
-        <a href="#" className="brand">Shop</a>
+        <a href="#" className="brand">Bean Bag</a>
         <div className="cart">
           <span className="cart-icon">🛒</span>
           <span className="cart-count">{cartCount}</span>

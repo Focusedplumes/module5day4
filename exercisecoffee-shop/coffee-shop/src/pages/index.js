@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [menu, setMenu] = useState([]);
+  const [cartCount, setCartCount] = useState(0); //need use state for counter to add items to cart
+
 
   useEffect(() => {
     async function loadData() {
@@ -12,22 +14,30 @@ export default function Home() {
     loadData();
   }, []);
 
-  function addToCart(id) {
-    fetch(`/api/cart`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: id, quantity: 1 }),
-    });
-  }
+  async function addToCart(id) {
+    await fetch(`/api/cart`, {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json",
+     },
+     body: JSON.stringify({ id: id, quantity: 1 }),
+   });
+   setCartCount(cartCount + 1); // Update cart count
+ }
+
 
   if (menu.length === 0) {
     return <h1>Loading...</h1>;
   }
 
   return (
-    <>
+    <><nav className="navbar">  {/* simple navigation showing items in shopping cart  */}
+        <a href="#" className="brand">Bean Bag</a>
+        <div className="cart">
+          <span className="cart-icon">🛒</span>
+          <span className="cart-count">{cartCount}</span>
+        </div>
+        </nav>
       <h1>Welcome to Coffee Shop</h1>
       <h4>Here is our menu:</h4>
       <div
