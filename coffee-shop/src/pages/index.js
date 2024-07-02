@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [menu, setMenu] = useState([]);
+  const [cartCount, setCartCount] = useState(0); //need use state for counter to add items to cart
 
   useEffect(() => {
     async function loadData() {
@@ -20,6 +21,7 @@ export default function Home() {
       },
       body: JSON.stringify({ id: id, quantity: 1 }),
     });
+    setCartCount(cartCount + 1); // Update cart count
   }
 
   if (menu.length === 0) {
@@ -28,6 +30,13 @@ export default function Home() {
 
   return (
     <>
+    <nav className="navbar">  {/* simple navigation showing items in shopping cart  */}
+        <a href="#" className="brand">Shop</a>
+        <div className="cart">
+          <span className="cart-icon">🛒</span>
+          <span className="cart-count">{cartCount}</span>
+        </div>
+        </nav>
       <h1>Welcome to Coffee Shop</h1>
       <h4>Here is our menu:</h4>
       <div
@@ -54,10 +63,12 @@ export default function Home() {
               <p>{item.description}</p>
               <p>{item.price}</p>
               <button onClick={() => addToCart(item.id)}>Add to cart</button>
+
             </div>
+            
           );
         })}
-      </div>
+      </div>       
     </>
   );
 }
