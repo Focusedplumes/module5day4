@@ -37,6 +37,7 @@ export const db = {
       }
       foundItem.quantity = newQuantity;
       writeDb(db);
+      return foundItem;
     },
     delete(cartItemId) {
       const db = readDb();
