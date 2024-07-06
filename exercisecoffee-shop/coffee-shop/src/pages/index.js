@@ -2,27 +2,39 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [menu, setMenu] = useState([]);
-  const [cartCount] = useState(0); //need use state for counter to add items to cart
+  const [cartCount, setCartCount] = useState(0); //need use state for counter to add items to cart
 
   useEffect(() => {
     async function loadData() {
+      try{
       const res = await fetch("/api/menu");
       const data = await res.json();
       setMenu(data.menu);
+    } catch (error) {
+      console.error("Error loading menu:", error);
     }
+  }
     loadData();
   }, []);
 
-  function addToCart(id) {
-   fetch(`/api/cart`, {
+  async function addToCart(id) {
+   try {
+      const res = await fetch(`/api/cart`, {
      method: "POST",
      headers: {
        "Content-Type": "application/json",
      },
      body: JSON.stringify({ id: id, quantity: 1 }),
    });
- }
-
+   if (res.ok) {
+    setCartCount(cartCount + 1); // Update cart count
+  }else {
+    console.error("Error adding to cart");
+  }
+} catch (error) {
+  console.error("Error adding to cart:", error);
+}
+}
 
   if (menu.length === 0) {
     return <h1>Loading...</h1>;
