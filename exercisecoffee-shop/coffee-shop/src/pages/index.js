@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [menu, setMenu] = useState([]);
-  const [cartCount, setCartCount] = useState(0); //need use state for counter to add items to cart
-
+  const [cartCount] = useState(0); //need use state for counter to add items to cart
 
   useEffect(() => {
     async function loadData() {
@@ -14,15 +13,14 @@ export default function Home() {
     loadData();
   }, []);
 
-  async function addToCart(id) {
-    await fetch(`/api/cart`, {
+  function addToCart(id) {
+   fetch(`/api/cart`, {
      method: "POST",
      headers: {
        "Content-Type": "application/json",
      },
      body: JSON.stringify({ id: id, quantity: 1 }),
    });
-   setCartCount(cartCount + 1); // Update cart count
  }
 
 
